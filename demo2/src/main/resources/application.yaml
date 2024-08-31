@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: demo2
+  datasource:
+    url: jdbc:mysql://localhost:3306/dorm?useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.demo.domain
+  configuration.log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# PageHelper 分页插件配置
+pagehelper:
+  #设置数据库种类
+  helper-dialect: mysql
+  #是否启动分页合理化。
+  #如果启用，当 pagenum < 1 时，会自动查询第一页的数据，
+  #当 pagenum > pages 时，自动查询最后一页数据
+  reasonable: true
+  #查询方法参数中，自动取值
+  support-methods-arguments: true
+  #用于从对象中根据属性名取值，
+  #可以配置 pageNum，pageSize，count，pageSizeZero，reasonable，
+  #不配置映射的用默认值，
+  #默认值为
+  #pageNum=pageNum；
+  #pageSize=pageSize；
+  #count=countSql；
+  #reasonable=reasonable；
+  #pageSizeZero=pageSizeZero
+  params: count=countSql

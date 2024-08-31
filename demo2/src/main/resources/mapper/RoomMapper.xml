@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.RoomMapper">
+    <!--    关系映射-->
+    <resultMap id="stuMap" type="com.example.demo.domain.vo.RoomVO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="floor_id" column="floor_id"/>
+        <association property="floorVO">
+            <result property="id" column="floor_id"/>
+            <result property="name" column="fName"/>
+        </association>
+    </resultMap>
+
+
+    <sql id="stuSelect">
+        select r.id,
+               r.name,
+               r.floor_id,
+               f.name fName
+        from room r,
+             floor f
+
+    </sql>
+
+    <select id="getAll" resultMap="stuMap">
+            <include refid="stuSelect" />
+            <where>
+                 r.floor_id = f.id
+            </where>
+    </select>
+    <select id="get" resultMap="stuMap">
+        <include refid="stuSelect" />
+        <where>
+            r.floor_id = f.id
+            and  r.id = #{id}
+        </where>
+    </select>
+    <insert id="add">
+
+        insert into room(name, floor_id)
+        values (#{name}, #{floor_id})
+
+
+    </insert>
+    <update id="edit">
+
+        update room
+        set name=#{name},
+            floor_id=#{floor_id}
+        where id = #{id}
+
+    </update>
+    <delete id="del">
+
+        delete
+        from room
+        where id = #{id}
+
+    </delete>
+
+</mapper>

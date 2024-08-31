@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.FloorMapper">
+
+    <select id="getAll" resultType="com.example.demo.domain.vo.FloorVO">
+        select id,name from floor
+    </select>
+    <select id="get" resultType="com.example.demo.domain.vo.FloorVO">
+        select id,name from floor where id=#{id}
+    </select>
+    <select id="getBySearch" resultType="com.example.demo.domain.vo.FloorVO">
+        select id,name from floor
+        <where>
+        <if test="name != null  and name != ''">  and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+    <insert id="add">
+        insert into  floor (name) values (#{name})
+    </insert>
+    <update id="edit">
+        update floor set name=#{name} where id=#{id}
+    </update>
+    <delete id="del">
+        delete from floor where id=#{id}
+    </delete>
+
+</mapper>
